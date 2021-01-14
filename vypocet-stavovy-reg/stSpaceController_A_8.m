@@ -24,7 +24,6 @@ B = [-2.2 0.54 0 0.0001;
 
 %vystupni matice systemu
 x = ["v_x","v_y","omega_y","alpha_y","v_z","omega_x","alpha_x","omega_z"];
-disp('regulovane veliciny: ');
 C = [0 1 0 0 0 0 0 0;
       0 0 0 0 1 0 0 0;
       1 0 0 0 0 0 0 0;
@@ -40,6 +39,7 @@ disp('-----------------------------------------');
 for i = 1: size(B,2)
     Qco{i,1} = ctrb(A,B(:,i));
     det_Qco(i,1) = det(Qco{i,1});
+    det_Qco(i,1)
     if det_Qco(i,1) == 0
         disp('Nulovy determinant, system je neriditelny!');
     else
@@ -55,7 +55,7 @@ disp('-----------------------------------------');
 for i = 1: size(C,1)
     Qob{i,1} = obsv(A,C(i,:));
     det_Qob(i,1) = det(Qob{i,1});
-    
+    det_Qob(i,1)
     if det_Qob == 0
         disp('System je nepozorovatelny!');
     else
@@ -70,10 +70,6 @@ disp('');
 %matice C
 %zavedene symbolicke promenne s jako komplexni promenne 
 syms s 
-disp('-----------------------------------------');
-disp('Prenos systemu');
-disp('-----------------------------------------');
-
 
 %jednotkova matice I*s
 for i = 1:size(A,1)
@@ -90,27 +86,26 @@ end
 %disp('sI - A');
 sIA = I - A;
 disp('-----------------------------------------');
-disp('det(sI - A)');
-det_sIA = det(sIA)
+det_sIA = det(sIA);
 disp('-----------------------------------------');
 
-disp('Determinanty pro jednotlive sloupce matice B a jednotlive radky matice C')
-disp('-----------------------------------------');
+%Determinanty pro jednotlive sloupce matice B a jednotlive radky matice C
+
 for i = 1:size(B,2)
     sIABC{i,1} = sIA+(B(:,i)*C(i,:));
-    sprintf('sI - A + B(%d,%d)*C(%d,%d)',size(B,2),i,i,size(C,1))
-    sIABC{i,1}
-    disp('-----------------------------------------');
+    sprintf('sI - A + B(%d,%d)*C(%d,%d)',size(B,2),i,i,size(C,1));
+    sIABC{i,1};
+   
     det_sIABC(i,1) = det(sIABC{i,1});
-    sprintf('det(sI - A + B(%d,%d)*(C(%d,%d))',size(B,2),i,i,size(C,1))
-    det_sIABC(i,1)
+    sprintf('det(sI - A + B(%d,%d)*(C(%d,%d))',size(B,2),i,i,size(C,1));
+    det_sIABC(i,1);
     Y(i,1) = det_sIABC(i,1) - det_sIA;
 end
-disp('-----------------------------------------');
 
-disp('Jmenovatel prenosu');
-disp('-----------------------------------------');
-U = det_sIA
+
+%Jmenovatel prenosu');
+
+U = det_sIA;
 
 %vypocet koeficintu citatele a jmenovatele
 for i = 1: size(B,2)
@@ -231,7 +226,7 @@ aw = aw(1,1:(length(aw)-1));
 disp('-----------------------------------------------------------')
 disp('');
 disp('-----------------------------------------------------------')
-disp('coeffs a: ');
+disp('koeficienty aw: ');
 aw
 disp('-----------------------------------------------------------')
 
